@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useNachricht } from "../hooks/useNachricht";
+import { Link } from "react-router-dom";
 
 export default function NachrichtenDetailPage() {
   const { id } = useParams();
@@ -18,30 +19,35 @@ export default function NachrichtenDetailPage() {
   }
 
   return (
-    <article className="max-w-3xl mx-auto p-6">
-      {nachricht.bildUrl && (
-        <img
-          src={nachricht.bildUrl}
-          alt={nachricht.titel}
-          className="w-full h-auto rounded-lg mb-6"
-        />
-      )}
+    <div className="flex flex-col m-5 gap-5">
+      <Link to="/" className="p-2 border rounded-full">
+        Zurück zu den Nachrichten
+      </Link>
+      <article className="max-w-3xl mx-auto">
+        {nachricht.bildUrl && (
+          <img
+            src={nachricht.bildUrl}
+            alt={nachricht.titel}
+            className="w-full h-auto rounded-lg mb-6"
+          />
+        )}
 
-      <h1 className="text-3xl font-bold mb-4">{nachricht.titel}</h1>
-      <p className="text-gray-700 mb-6">{nachricht.inhalt}</p>
+        <h1 className="text-3xl font-bold mb-4">{nachricht.titel}</h1>
+        <p className="text-gray-700 mb-6">{nachricht.inhalt}</p>
 
-      <div className="flex flex-wrap gap-2">
-        {nachricht.hashtags?.map((tag) => {
-          return (
-            <span
-              key={tag}
-              className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full font-medium"
-            >
-              #{tag}
-            </span>
-          );
-        })}
-      </div>
-    </article>
+        <div className="flex flex-wrap gap-2">
+          {nachricht.hashtags?.map((tag) => {
+            return (
+              <span
+                key={tag}
+                className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full font-medium"
+              >
+                #{tag}
+              </span>
+            );
+          })}
+        </div>
+      </article>
+    </div>
   );
 }
