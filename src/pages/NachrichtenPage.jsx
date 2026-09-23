@@ -4,7 +4,8 @@ import { useState } from "react";
 
 export default function NachrichtenPage() {
   const [selectedTag, setSelectedTag] = useState(null);
-  const { items, loading, error, loadMore } = useNachrichten(selectedTag);
+  const { items, loading, error, loadMore, hasMore } =
+    useNachrichten(selectedTag);
 
   if (loading && items.length === 0) {
     return <p className="p-6 text-center text-gray-500">Lädt Nachrichten...</p>;
@@ -69,15 +70,17 @@ export default function NachrichtenPage() {
         ))}
       </div>
 
-      <div className="text-center mt-8">
-        <button
-          type="button"
-          onClick={loadMore}
-          className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-        >
-          Mehr laden
-        </button>
-      </div>
+      {hasMore && (
+        <div className="text-center mt-8">
+          <button
+            type="button"
+            onClick={loadMore}
+            className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors shadow-sm"
+          >
+            Mehr laden
+          </button>
+        </div>
+      )}
     </main>
   );
 }

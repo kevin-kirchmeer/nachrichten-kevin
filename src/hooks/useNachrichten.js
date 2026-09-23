@@ -11,6 +11,7 @@ export function useNachrichten(tag = null) {
   const [error, setError] = useState(null);
   const [skip, setSkip] = useState(0);
   const [prevTag, setPrevTag] = useState(tag);
+  const [hasMore, setHasMore] = useState(true);
 
   if (prevTag !== tag) {
     setPrevTag(tag);
@@ -39,11 +40,13 @@ export function useNachrichten(tag = null) {
         }
 
         const data = await response.json();
+
         if (skip === 0) {
           setItems(data.items ?? []);
         } else {
           setItems((prev) => [...prev, ...(data.items ?? [])]);
         }
+        setHasMore(skip + LIMIT < data.total);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -56,7 +59,7 @@ export function useNachrichten(tag = null) {
 
   const loadMore = () => {
     setSkip((prev) => prev + LIMIT);
-  }
+  };
 
-  return { items, loading, error, loadMore };
+  return { items, loading, error, loadMore, hasMore };
 }
