@@ -6,7 +6,7 @@ export default function NachrichtenPage() {
   const [selectedTag, setSelectedTag] = useState(null);
   const { items, loading, error, loadMore } = useNachrichten(selectedTag);
 
-  if (loading) {
+  if (loading && items.length === 0) {
     return <p className="p-6 text-center text-gray-500">Lädt Nachrichten...</p>;
   }
 
