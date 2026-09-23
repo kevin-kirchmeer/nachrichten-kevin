@@ -3,11 +3,19 @@ import { useEffect, useState } from "react";
 const SPACE = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
 const TOKEN = import.meta.env.VITE_CONTENTFUL_TOKEN;
 const BASE = `https://cdn.contentful.com/spaces/${SPACE}/environments/master`;
+const LIMIT = 3;
 
 export function useNachrichten(tag = null) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [skip, setSkip] = useState(0);
+  const [prevTag, setPrevTag] = useState(tag);
+
+  if (prevTag !== tag) {
+    setPrevTag(tag);
+    setSkip(0);
+  }
 
   useEffect(() => {
     async function load() {
@@ -18,11 +26,12 @@ export function useNachrichten(tag = null) {
         let url =
           `${BASE}/entries?content_type=nachrichten` +
           `&select=sys.id,fields.titel,fields.teaser` +
+          `&limit=${LIMIT}&skip=${skip}` +
           `&order=-sys.createdAt&access_token=${TOKEN}`;
 
-          if (tag) {
-            url += `&fields.hashtags[in]=${tag}`;
-          }
+        if (tag) {
+          url += `&fields.hashtags[in]=${tag}`;
+        }
 
         const response = await fetch(url);
         if (!response.ok) {
@@ -30,7 +39,11 @@ export function useNachrichten(tag = null) {
         }
 
         const data = await response.json();
-        setItems(data.items ?? []);
+        if (skip === 0) {
+          setItems(data.items ?? []);
+        } else {
+          setItems((prev) => [...prev, ...(data.items ?? [])]);
+        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -39,7 +52,11 @@ export function useNachrichten(tag = null) {
     }
 
     load();
-  }, [tag]);
+  }, [tag, skip]);
 
-  return { items, loading, error };
+  const loadMore = () => {
+    setSkip((prev) => prev + LIMIT);
+  }
+
+  return { items, loading, error, loadMore };
 }
