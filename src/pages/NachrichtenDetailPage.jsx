@@ -19,10 +19,11 @@ export default function NachrichtenDetailPage() {
   }
 
   return (
-    <div className="flex flex-col m-5 gap-5">
-      <Link to="/" className="p-2 border rounded-full">
+    <div className="flex flex-col m-5 gap-4">
+      <Link to="/" className="px-4 py-2 bg-blue-700 text-white text-sm font-bold hover:shadow-2xl hover:scale-105 duration-200 transition-all rounded-full w-fit">
         Zurück zu den Nachrichten
       </Link>
+      
       <article className="max-w-3xl mx-auto">
         {nachricht.bildUrl && (
           <img

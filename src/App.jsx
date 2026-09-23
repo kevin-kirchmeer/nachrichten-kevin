@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-light">
+    <div className="flex flex-col min-h-screen bg-light items-center">
       <Routes>
         <Route path="/" element={<NachrichtenPage />} />
         <Route path="/nachricht/:id" element={<NachrichtenDetailPage />} />
