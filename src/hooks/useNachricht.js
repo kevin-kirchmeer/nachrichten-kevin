@@ -16,7 +16,7 @@ export function useNachricht(id) {
         setError(null);
 
         const url =
-          `${BASE}/entries?content_type=nachricht` +
+          `${BASE}/entries?content_type=nachrichten` +
           `&sys.id=${id}` +
           `&access_token=${TOKEN}`;
 

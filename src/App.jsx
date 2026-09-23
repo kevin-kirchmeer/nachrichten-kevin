@@ -8,7 +8,7 @@ export default function App() {
     <div className="flex flex-col min-h-screen bg-light">
       <Routes>
         <Route path="/" element={<NachrichtenPage />} />
-        <Route path="/nachrichten/:id" element={<NachrichtenDetailPage />} />
+        <Route path="/nachricht/:id" element={<NachrichtenDetailPage />} />
       </Routes>
     </div>
   );
