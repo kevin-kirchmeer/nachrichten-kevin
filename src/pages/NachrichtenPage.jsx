@@ -38,7 +38,7 @@ export default function NachrichtenPage() {
           Alle
         </button>
 
-        {["horror", "gaming", "modding", "fps"].map((tag) => (
+        {["horror", "gaming", "modding", "fps", "survival"].map((tag) => (
           <button
             key={tag}
             type="button"
@@ -55,22 +55,37 @@ export default function NachrichtenPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {items.map((item) => (
-          <Link
-            key={item.sys.id}
-            to={`/nachricht/${item.sys.id}`}
-            className="block p-5 bg-gray-200 hover:bg-emerald-50 rounded-lg shadow-sm hover:shadow-md hover:shadow-emerald-700 transition-shadow duration-200 border border-gray-100"
+      {items.length === 0 && !loading ? (
+        <div className="text-center py-12">
+          <p className="text-gray-500 mb-3">
+            Keine Nachrichten zu diesem Thema gefunden.
+          </p>
+          <button
+            type="button"
+            onClick={() => setSelectedTag(null)}
+            className="text-emerald-600 hover:text-emerald-700 underline font-medium cursor-pointer"
           >
-            <h2 className="text-xl font-semibold mb-2 text-gray-900">
-              {item.fields.titel}
-            </h2>
-            <p className="text-gray-600 line-clamp-3">{item.fields.teaser}</p>
-          </Link>
-        ))}
-      </div>
+            Zurück zu allen Nachrichten
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {items.map((item) => (
+            <Link
+              key={item.sys.id}
+              to={`/nachricht/${item.sys.id}`}
+              className="block p-5 bg-gray-200 hover:bg-emerald-50 rounded-lg shadow-sm hover:shadow-md hover:shadow-emerald-700 transition-shadow duration-200 border border-gray-100"
+            >
+              <h2 className="text-xl font-semibold mb-2 text-gray-900">
+                {item.fields.titel}
+              </h2>
+              <p className="text-gray-600 line-clamp-3">{item.fields.teaser}</p>
+            </Link>
+          ))}
+        </div>
+      )}
 
-      {hasMore && (
+      {hasMore && items.length > 0 && (
         <div className="text-center mt-8">
           <button
             type="button"
