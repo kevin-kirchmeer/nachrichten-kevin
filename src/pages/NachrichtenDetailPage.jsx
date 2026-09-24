@@ -25,13 +25,13 @@ export default function NachrichtenDetailPage() {
       </Link>
       
       <article className="max-w-3xl mx-auto">
-        {nachricht.bildUrl && (
+        {nachricht.bildUrl ? (
           <img
             src={nachricht.bildUrl}
             alt={nachricht.titel}
             className="w-full h-auto rounded-lg mb-6"
-          />
-        )}
+          /> ) : ( <p className="h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 mb-6">Kein Bild vorhanden.</p> )
+        }
 
         <h1 className="text-3xl font-bold mb-4">{nachricht.titel}</h1>
         <p className="text-gray-700 mb-6">{nachricht.inhalt}</p>
