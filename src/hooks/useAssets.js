@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { client } from "../lib/contentful";
 
 export function useAssets() {
-  const [items, setItems] = useState([]);
+  const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,7 +16,7 @@ export function useAssets() {
           order: "-sys.createdAt",
         });
 
-        setItems(response.items ?? []);
+        setAssets(response.items ?? []);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -27,5 +27,5 @@ export function useAssets() {
     loadAssets();
   }, []);
 
-  return {items, loading, error}
+  return {assets, loading, error}
 }
