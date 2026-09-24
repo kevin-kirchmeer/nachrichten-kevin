@@ -1,4 +1,4 @@
-import { useNachrichten } from "../hooks/useNachrichten";
+import { useNachrichtenSdk } from "../hooks/useNachrichtenSdk";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import LiveTicker from "../components/LiveTicker";
@@ -6,7 +6,7 @@ import LiveTicker from "../components/LiveTicker";
 export default function NachrichtenPage() {
   const [selectedTag, setSelectedTag] = useState(null);
   const { items, loading, error, loadMore, hasMore } =
-    useNachrichten(selectedTag);
+    useNachrichtenSdk(selectedTag);
 
   if (loading && items.length === 0) {
     return <p className="p-6 text-center text-gray-500">Lädt Nachrichten...</p>;
