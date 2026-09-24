@@ -1,6 +1,7 @@
 import { useNachrichten } from "../hooks/useNachrichten";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import LiveTicker from "../components/LiveTicker";
 
 export default function NachrichtenPage() {
   const [selectedTag, setSelectedTag] = useState(null);
@@ -55,47 +56,57 @@ export default function NachrichtenPage() {
         ))}
       </div>
 
-      {items.length === 0 && !loading ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 mb-3">
-            Keine Nachrichten zu diesem Thema gefunden.
-          </p>
-          <button
-            type="button"
-            onClick={() => setSelectedTag(null)}
-            className="text-emerald-600 hover:text-emerald-700 underline font-medium cursor-pointer"
-          >
-            Zurück zu allen Nachrichten
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item) => (
-            <Link
-              key={item.sys.id}
-              to={`/nachricht/${item.sys.id}`}
-              className="block p-5 bg-gray-200 hover:bg-emerald-50 rounded-lg shadow-sm hover:shadow-md hover:shadow-emerald-700 transition-shadow duration-200 border border-gray-100"
-            >
-              <h2 className="text-xl font-semibold mb-2 text-gray-900">
-                {item.fields.titel}
-              </h2>
-              <p className="text-gray-600 line-clamp-3">{item.fields.teaser}</p>
-            </Link>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          {items.length === 0 && !loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 mb-3">
+                Keine Nachrichten zu diesem Thema gefunden.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSelectedTag(null)}
+                className="text-emerald-600 hover:text-emerald-700 underline font-medium cursor-pointer"
+              >
+                Zurück zu allen Nachrichten
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {items.map((item) => (
+                <Link
+                  key={item.sys.id}
+                  to={`/nachricht/${item.sys.id}`}
+                  className="block p-5 bg-gray-200 hover:bg-emerald-50 rounded-lg shadow-sm hover:shadow-md hover:shadow-emerald-700 transition-shadow duration-200 border border-gray-100"
+                >
+                  <h2 className="text-xl font-semibold mb-2 text-gray-900">
+                    {item.fields.titel}
+                  </h2>
+                  <p className="text-gray-600 line-clamp-3">
+                    {item.fields.teaser}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          )}
 
-      {hasMore && items.length > 0 && (
-        <div className="text-center mt-8">
-          <button
-            type="button"
-            onClick={loadMore}
-            className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-          >
-            Mehr laden
-          </button>
+          {hasMore && items.length > 0 && (
+            <div className="text-center mt-8">
+              <button
+                type="button"
+                onClick={loadMore}
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors shadow-sm"
+              >
+                Mehr laden
+              </button>
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="lg:col-span-1">
+          <LiveTicker />
+        </div>
+      </div>
     </main>
   );
 }
