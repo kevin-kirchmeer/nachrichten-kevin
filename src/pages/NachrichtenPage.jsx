@@ -77,14 +77,24 @@ export default function NachrichtenPage() {
                 <Link
                   key={item.sys.id}
                   to={`/nachricht/${item.sys.id}`}
-                  className="block p-5 bg-gray-200 hover:bg-emerald-50 rounded-lg shadow-sm hover:shadow-md hover:shadow-emerald-700 transition-shadow duration-200 border border-gray-100"
+                  className="overflow-hidden flex flex-col bg-gray-200 hover:bg-emerald-50 rounded-lg shadow-sm hover:shadow-md hover:shadow-emerald-700 transition-shadow duration-200 border border-gray-100"
                 >
-                  <h2 className="text-xl font-semibold mb-2 text-gray-900">
-                    {item.fields.titel}
-                  </h2>
-                  <p className="text-gray-600 line-clamp-3">
-                    {item.fields.teaser}
-                  </p>
+                  {item.bildUrl && (
+                    <img
+                      src={`${item.bildUrl}?w=400&h=200&fit=fill&fm=webp&q=80`}
+                      alt={item.fields.titel}
+                      className="w-full h-40 object-cover"
+                    />
+                  )}
+
+                  <div className="p-5 flex flex-col grow">
+                    <h2 className="text-xl font-semibold mb-2 text-gray-900">
+                      {item.fields.titel}
+                    </h2>
+                    <p className="text-gray-600 line-clamp-3">
+                      {item.fields.teaser}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>

@@ -26,7 +26,7 @@ export function useNachrichten(tag = null) {
 
         let url =
           `${BASE}/entries?content_type=nachrichten` +
-          `&select=sys.id,fields.titel,fields.teaser` +
+          `&select=sys.id,fields.titel,fields.teaser,fields.bild` +
           `&limit=${LIMIT}&skip=${skip}` +
           `&order=-sys.createdAt&access_token=${TOKEN}`;
 
@@ -41,10 +41,23 @@ export function useNachrichten(tag = null) {
 
         const data = await response.json();
 
+        const assets = data.includes?.Asset ?? [];
+        const enrichedItems = data.items.map((item) => {
+          const imageId = item.fields.bild?.sys?.id;
+          const foundAsset = assets.find((asset) => asset.sys.id === imageId);
+          const rawUrl = foundAsset?.fields?.file?.url;
+          const bildUrl = rawUrl ? `https:${rawUrl}` : null;
+
+          return {
+            ...item,
+            bildUrl,
+          };
+        });
+
         if (skip === 0) {
-          setItems(data.items ?? []);
+          setItems(enrichedItems ?? []);
         } else {
-          setItems((prev) => [...prev, ...(data.items ?? [])]);
+          setItems((prev) => [...prev, ...(enrichedItems ?? [])]);
         }
         setHasMore(skip + LIMIT < data.total);
       } catch (error) {

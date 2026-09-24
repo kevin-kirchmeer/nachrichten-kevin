@@ -20,18 +20,25 @@ export default function NachrichtenDetailPage() {
 
   return (
     <div className="flex flex-col m-5 gap-4">
-      <Link to="/" className="px-4 py-2 bg-blue-700 text-white text-sm font-bold hover:shadow-2xl hover:scale-105 duration-200 transition-all rounded-full w-fit">
+      <Link
+        to="/"
+        className="px-4 py-2 bg-blue-700 text-white text-sm font-bold hover:shadow-2xl hover:scale-105 duration-200 transition-all rounded-full w-fit"
+      >
         Zurück zu den Nachrichten
       </Link>
-      
+
       <article className="max-w-3xl mx-auto">
         {nachricht.bildUrl ? (
           <img
-            src={nachricht.bildUrl}
+            src={`${nachricht.bildUrl}?w=800&fm=webp&q=80`}
             alt={nachricht.titel}
-            className="w-full h-auto rounded-lg mb-6"
-          /> ) : ( <p className="h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 mb-6">Kein Bild vorhanden.</p> )
-        }
+            className="w-full h-auto rounded-lg mb-6 object-cover"
+          />
+        ) : (
+          <p className="h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 mb-6">
+            Kein Bild vorhanden.
+          </p>
+        )}
 
         <h1 className="text-3xl font-bold mb-4">{nachricht.titel}</h1>
         <p className="text-gray-700 mb-6">{nachricht.inhalt}</p>
