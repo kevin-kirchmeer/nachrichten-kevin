@@ -8,14 +8,15 @@ export function useTicker() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function loadTicker() {
+        async function fetchTicker() {
             try {
-                setLoading(true);
+
                 setError(null);
 
                 const response = await client.getEntries({
                     content_type: "ticker",
                     order: "-sys.createdAt",
+                    limit: 5,
                 });
                 
                 setItems(response.items ?? []);
@@ -26,7 +27,14 @@ export function useTicker() {
             }
         }
 
-        loadTicker();
+        fetchTicker();
+
+        const interval = setInterval(() => {
+            fetchTicker()
+        }, 30000);
+
+        console.log(interval);
+        return () => clearInterval(interval);
     }, []);
 
     return { items, loading, error }

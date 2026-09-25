@@ -9,7 +9,7 @@ export default function Header() {
           <span className="bg-emerald-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold">
             N
           </span>
-          NewsHub
+          NewsPortal
         </Link>
 
         <nav className="flex items-center gap-6">
