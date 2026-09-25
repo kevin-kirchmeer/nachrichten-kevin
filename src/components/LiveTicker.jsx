@@ -1,4 +1,6 @@
 import { useTicker } from "../hooks/useTicker";
+import { formatDistanceToNow } from "date-fns";
+import { de } from "date-fns/locale";
 
 export default function LiveTicker() {
   const { items, loading, error } = useTicker();
@@ -21,15 +23,22 @@ export default function LiveTicker() {
       </h2>
 
       <ul className="space-y-4">
-        {items.map((item) =>(
-            <li key={item.sys.id} className="border-b border-gray-200 pb-3 last:border-b-0">
-                <strong>
-                    {item.fields.titel}
-                </strong>
-                <p className="text-sm text-gray-600 mt-1">
-                    {item.fields.text}
-                </p>
-            </li>
+        {items.map((item) => (
+          <li
+            key={item.sys.id}
+            className="border-b border-gray-200 pb-3 last:border-b-0"
+          >
+            <div className="flex flex-col">
+              <p className="font-bold">{item.fields.titel}</p>
+              <p className="text-xs text-gray-400 mb-1">
+                {formatDistanceToNow(new Date(item.sys.createdAt), {
+                  addSuffix: true,
+                  locale: de,
+                })}
+              </p>
+            </div>
+            <p className="text-sm text-gray-600 mt-1">{item.fields.text}</p>
+          </li>
         ))}
       </ul>
     </aside>

@@ -2,7 +2,7 @@ import { useNachrichtenSdk } from "../hooks/useNachrichtenSdk";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import LiveTicker from "../components/LiveTicker";
-import { formatDate } from "../utils/formatDate"
+import { formatDate } from "../utils/formatDate";
 
 export default function NachrichtenPage() {
   const [selectedTag, setSelectedTag] = useState(null);
