@@ -55,8 +55,12 @@ export default function NachrichtenPage() {
           </button>
         ))}
       </div>
+      
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-1">
+          <LiveTicker />
+        </div>
         <div className="lg:col-span-2">
           {items.length === 0 && !loading ? (
             <div className="text-center py-12">
@@ -81,9 +85,16 @@ export default function NachrichtenPage() {
                 >
                   {item.bildUrl && (
                     <img
-                      src={`${item.bildUrl}?w=400&h=200&fit=fill&fm=webp&q=80`}
+                      src={`${item.bildUrl}?w=800&fm=webp&q=80`}
+                      srcSet={`
+                      ${item.bildUrl}?w=400&fm=webp&q=80 400w,
+                      ${item.bildUrl}?w=800&fm=webp&q=80 800w,
+                      ${item.bildUrl}?w=1200&fm=webp&q=80 1200w
+                      `}
+                      sizes="(max-width:768px) 100vw, (max-width: 1200px) 50vw, 400px"
                       alt={item.fields.titel}
                       className="w-full h-40 object-cover"
+                      loading="lazy"
                     />
                   )}
 
@@ -111,10 +122,6 @@ export default function NachrichtenPage() {
               </button>
             </div>
           )}
-        </div>
-
-        <div className="lg:col-span-1">
-          <LiveTicker />
         </div>
       </div>
     </main>
