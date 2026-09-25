@@ -2,6 +2,7 @@ import { useNachrichtenSdk } from "../hooks/useNachrichtenSdk";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import LiveTicker from "../components/LiveTicker";
+import { formatDate } from "../utils/formatDate"
 
 export default function NachrichtenPage() {
   const [selectedTag, setSelectedTag] = useState(null);
@@ -55,7 +56,6 @@ export default function NachrichtenPage() {
           </button>
         ))}
       </div>
-      
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-1">
@@ -98,7 +98,13 @@ export default function NachrichtenPage() {
                     />
                   )}
 
-                  <div className="p-5 flex flex-col grow">
+                  <div className="p-3 flex flex-col grow">
+                    <p className="text-xs text-gray-400 mb-1">
+                      {formatDate(item.sys.createdAt)}
+                    </p>
+                  </div>
+
+                  <div className="p-3 flex flex-col grow">
                     <h2 className="text-xl font-semibold mb-2 text-gray-900">
                       {item.fields.titel}
                     </h2>
